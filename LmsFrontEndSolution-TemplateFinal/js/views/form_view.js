@@ -103,8 +103,10 @@ class FormView extends View {
     //2.  If this.currentItemId isn't null, call RestStorageApi  'update' function to update your object
     if (this.currentItemId){
       this.storage.update(this.currentItemId, this.getFormData());
+      window.location.hash=`#/${this.apiName}`;
     } else {
       this.storage.create(this.getFormData());
+      window.location.hash=`#/${this.apiName}`;
     }
     //3.  Otherwise,  call the 'create' function to create a new object.
     //4.  The promise pattern is a good one to use here since you are calling an 'async' function from a 'non-async' function.
