@@ -1,0 +1,13 @@
+/* Write your SCSS here for your application
+ Install the Live Sass Compiler (Ritwick Dey) V. 3.0.0
+ Click on 'Watch Sass' button on toolbar below
+ main.scss will get compiled into main.css (don't modify this file yourself)
+ */
+.temp {
+  color: black;
+}
+
+.sortable {
+  cursor: pointer;
+}
+/*# sourceMappingURL=main.css.map */

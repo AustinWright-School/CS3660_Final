@@ -1,0 +1,85 @@
+                <!-- RENDER YOUR SELECT INPUT -->
+                <!-- Iterate 'options' to output each select option-->
+                <!-- Remember to create an option with a blank 'value'
+                    You can use the field.placeholder for the name -->
+                    <!--EXAMPLE VIEW MODEL FOR SELECT
+                      {
+                          label: "Team",
+                          name: "team_id",
+                          inputType: "select",
+                          list:true,
+                          placeholder: "Select a Team",
+                          lookupName: "teams",
+                          validation: {
+                              required: true
+                          }
+                      } RENDER YOUR OTHER INPUTS 
+                    No need to render radio buttons or checkboxes for this 
+                    go round.  Only 'inputs'-->
+                    <!--EXAMPLE VIEW MODEL FOR NORMAL INPUT
+                      {
+                          label: "Address",
+                          name: "address1",
+                          inputType: "text",
+                          list: false,
+                          placeholder: "Enter your address name here",
+                          validation: {
+                              required: true,
+                              requiredMessage: "Address is required!"
+                          }
+                      }, -->
+
+<div class="row">
+  <div class="col-sm-12">
+        <form id="<%=view.viewModel.form.id%>" class="needs-validation">
+          <h1><%=view.currentItemId?view.viewModel.form.editFormTitle:view.viewModel.form.addFormTitle%><%=view.appViewModel.isMock?" (MOCK DATA)":""%></h1>
+          <div class="form-row">
+          <% view.viewModel.fields.forEach(function(field) {
+            let fieldVal=!view.viewModel.currentItemId?"":view.getFieldValue(field, view._data); 
+            %><div class="col-md-6 mb-3"><% 
+            if(field.inputType == "select") { 
+            let options=view.storage.lookups[field.lookupName];
+            
+            %>
+
+                      <label for="<%= field.name %>"><%= field.label %></label>
+                      <select class="form-select" id="<%= field.name %>" name="<%= field.name %>">
+
+                        <option><%= field.placeholder %></option>
+                        
+                        <% if (field.lookupName === "teams") {
+                          options.forEach((k,v) => { %> <option value="<%= k.id %>"><%= k.name %></option> <% }); 
+                        } else {
+                          options.forEach((k,v) => { %> <option value="<%= k.id %>"><%= `${k.first_name} ${k.last_name}` %></option> <% });
+                        } %>
+                         
+
+                      </select>
+                      <div class="invalid-feedback"></div>
+
+            <%} 
+            else { 
+              %>
+
+              
+
+
+                      <label for="<%= field.name %>"><%= field.label %></label>
+                      <input type="<%= field.inputType %>" class="form-control" name="<%= field.name %>" id="<%= field.name %>" placeholder="<%= field.placeholder %>"
+                        value="<%= fieldVal %>" />
+                      <div class="invalid-feedback"></div>
+                <% } %>
+              </div>
+            <% }); %>
+            <!-- RENDER YOUR SUBMIT BUTTON -->
+            <button class="btn btn-primary btn-lg" type="submit">Submit form</button>
+            <!-- RENDER YOUR CANCEL BUTTON -->
+            <input class="btn btn-outline-danger btn-lg" type="reset" id="reset" />
+                      
+      
+        
+
+      </form>
+    </div>  <!--end col-->
+    
+  </div>   <!--end row-->

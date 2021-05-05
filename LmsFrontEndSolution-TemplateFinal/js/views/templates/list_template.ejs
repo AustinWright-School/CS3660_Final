@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-12">
+    <h1> <%=view.viewModel.list.listTitle%><%=view.appViewModel.isMock?" (MOCK DATA)":""%> </h1>
+  </div>
+  <div class="col-12 d-flex p-1 justify-content-end">
+    
+  
+      <input id="" class="col-3 mr-2 form-control searchfield" placeholder="Search..." />
+      <div class="mr-3">
+        <button class="btn btn-primary mr-3" id="reset" role="button">Reset</a>
+      </div>
+      <div class="mr-3">
+        <a class="btn btn-primary" href="#/<%=view.apiName%>/create" role="button">Create</a>
+      </div>
+      
+  </div>
+
+</div>
+<table id='table' class="<%=view.viewModel.list.tableClasses%>">
+
+  <tr class="trow">
+    <!-- create the headers -->
+    <% view.viewModel.fields.forEach( function(value, key){ %>
+        
+        <% if (value.name != "id" && value.list) {%>
+    <th class="thead sortable" data-name="<%=value.name%>"> <%=value.label%> <i id="<%=value.name%>-asc" class="fa fa-arrow-up" aria-hidden="true" style="display:none"></i><i id="<%=value.name%>-desc" class="fa fa-arrow-down" aria-hidden="true" style="display:none"></i> </th>
+    <% }}) %>
+  
+    <th class="thead"> Actions </th>
+  </tr>
+
+        <% view._data.forEach(function(data){ %>
+        <tr id = "row<%=data.id%>">
+          <!-- create the headers -->
+          <% view.viewModel.fields.forEach(function(field, key){ %>
+          <% if (field.list) { 
+            let displayVal=field.lookupName?view.getLookup(field.lookupName, data[field.name]):data[field.name];
+            %>
+              <td> <%=displayVal%> </td>
+             <% } %>
+
+           <% }) %>
+          <td>
+            <a href="#/<%=view.apiName%>/edit/<%=data.id%>"><i class='actionButton fa fa-edit'></i></a>
+            <i id="remove<%=data.id%>" class="actionButton fa fa-trash"></i>
+          </td>
+        </tr>
+        <% }) %>
+</table>
