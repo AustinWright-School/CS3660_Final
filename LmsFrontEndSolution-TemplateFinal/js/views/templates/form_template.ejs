@@ -46,11 +46,14 @@
                       <select class="form-select" id="<%= field.name %>" name="<%= field.name %>">
 
                         <option><%= field.placeholder %></option>
-                        
                         <% if (field.lookupName === "teams") {
-                          options.forEach((k,v) => { %> <option value="<%= k.id %>"><%= k.name %></option> <% }); 
+                          options.forEach((k,v) => { %> <option value="<%= k.id %>"
+                            <% if(view._data && view._data.team_id === k.id) { %> selected <% } %>
+                            ><%= k.name %></option> <% }); 
                         } else {
-                          options.forEach((k,v) => { %> <option value="<%= k.id %>"><%= `${k.first_name} ${k.last_name}` %></option> <% });
+                          options.forEach((k,v) => { %> <option value="<%= k.id %>"
+                            <% if(view._data && view._data.coach_id === k.id) { %> selected <% } %>
+                            ><%= `${k.first_name} ${k.last_name}` %></option> <% });
                         } %>
                          
 
